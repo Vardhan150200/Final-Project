@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "853852193947",
+    "project_id": "nearblood-61bb1",
+    "storage_bucket": "nearblood-61bb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853852193947:android:3c9693bb91661bc160723e",
+        "android_client_info": {
+          "package_name": "com.example.nearblood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853852193947-f07reepl2ihagscm73o795j1dal9fs40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1PFZR-zPYj2H9Si8ExP_t07x6fCbx2D8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853852193947-f07reepl2ihagscm73o795j1dal9fs40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
