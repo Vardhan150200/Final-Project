@@ -12,13 +12,14 @@ public class Details {
     private String password;
     private String blood;
     private String age;
-    private String lastDate;
-    private String setDate;
+    private Double latitude;
+    private Double longitude;
 
+    
     public Details() {
     }
 
-    public Details(String id, String name, String email, String number, String password1, String blood, String age, String lastDate, String setDate) {
+    public Details(String id, String name, String email, String number, String password1, String blood, String age, Double latitude, Double longitude) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -26,8 +27,9 @@ public class Details {
         this.password = password1;
         this.blood = blood;
         this.age = age;
-        this.lastDate = lastDate;
-        this.setDate = setDate;
+
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getId() {
@@ -86,20 +88,23 @@ public class Details {
         this.age = age;
     }
 
-    public String getLastDate() {
-        return lastDate;
+
+
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setLastDate(String lastDate) {
-        this.lastDate = lastDate;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
-    public String getSetDate() {
-        return setDate;
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setSetDate(String setDate) {
-        this.setDate = setDate;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
+
 }
 

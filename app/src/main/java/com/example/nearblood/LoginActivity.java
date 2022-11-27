@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     MyAppPrefsManager myAppPrefsManager;
     boolean doubleBackToExitPressedOnce = false;
     Snackbar snackbar;
+    Details details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         etMobile = (EditText) findViewById(R.id.etMobile);
         etPassword = (EditText) findViewById(R.id.etPassword);
-
         btnSignIn = (Button) findViewById(R.id.btnSignIn);
         btnSignIn.setOnClickListener(this);
 
@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void onClick(View V) {
         final String email = etMobile.getText().toString().trim();
+
         String password = etPassword.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
             if ((TextUtils.isEmpty(password)))

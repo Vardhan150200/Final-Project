@@ -4,11 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/drawable/backgroundcolor.xml" value="0.1255" />
+        <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/drawable/button_border_solid.xml" value="0.144" />
         <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/drawable/circlershape.xml" value="0.1255" />
-        <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/layout/activity_home.xml" value="0.20380434782608695" />
+        <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/drawable/spinnerroundlayout.xml" value="0.144" />
+        <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/layout-w1240dp/custom_list_view.xml" value="0.67" />
+        <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/layout/activity_donardetails.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/layout/activity_home.xml" value="0.33" />
         <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/layout/activity_maps.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/layout/activity_reset_password.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/Santosh_Burada/AndroidStudioProjects/Practice/NearBlood/app/src/main/res/layout/custom_lis_view.xml" value="0.203125" />
       </map>
     </option>
   </component>

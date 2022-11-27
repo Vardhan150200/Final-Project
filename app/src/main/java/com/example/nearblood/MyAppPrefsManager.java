@@ -2,6 +2,8 @@ package com.example.nearblood;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationManager;
 
 
 /**
@@ -18,6 +20,8 @@ public class MyAppPrefsManager {
 
 
     private static final String USER_ID  = "user_id";
+    private static final double CURRENT_LAT =0.0;
+    private static final double CURRENT_LAN =0.0;
     private static final String USER_NAME  = "user_name";
     private static final String USER_MOBILE  = "user_mobile";
     private static final String USER_PINCODE  = "user_pincode";
@@ -45,7 +49,6 @@ public class MyAppPrefsManager {
         prefsEditor = sharedPreferences.edit();
         prefsEditor.apply();
     }
-
 
 
 

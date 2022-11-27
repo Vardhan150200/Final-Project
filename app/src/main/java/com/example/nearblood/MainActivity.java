@@ -3,12 +3,20 @@ package com.example.nearblood;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.telecom.Call;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,7 +26,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,18 +54,28 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+//    private static final int REQUEST_CHECK_SETTINGS = 2 ;
     EditText etFullName, etMobile, etEmail, etPassword, etAge;
     String name, email, number, password, bloodgroup, age;
     Button btnSave;
     Spinner spinner;
-    String date, date1;
+    FusedLocationProviderClient fusedLocationProviderClient;
     private FirebaseAuth mAuth;
+    Double latitude,longitude;
     ProgressDialog progressDialog;
     FirebaseDatabase database;
     DatabaseReference myRef;
     TextView textView;
     FirebaseAuth firebaseAuth;
+    private LocationRequest locationRequest;
     private int i;
+    private final int PERMISSION_REQUEST_CODE = 100;
+    private final String[] foreground_location_permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+    Manifest.permission.ACCESS_COARSE_LOCATION};
+
+
+    private PermissionManager permissionManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +88,60 @@ public class MainActivity extends AppCompatActivity {
         utilites.internetCheck(MainActivity.this);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("details");
+        myRef = database.getReference("Users");
         firebaseAuth = FirebaseAuth.getInstance();
         spinner = findViewById(R.id.spinnerBlood);
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(2000);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        // get the location permissions for foreground
+        permissionManager = PermissionManager.getInstance(this);
+        if(!permissionManager.checkPermission(foreground_location_permissions)){
+            permissionManager.askPermissions(MainActivity.this, foreground_location_permissions, 100);
+        }
+
+        if(permissionManager.checkPermission(foreground_location_permissions)){
+            Toast.makeText(this, "entered", Toast.LENGTH_SHORT).show();
+            if(isGPSEnabled()){
+                //Toast.makeText(this, "entered2", Toast.LENGTH_SHORT).show();
+                LocationServices.getFusedLocationProviderClient(MainActivity.this)
+                        .requestLocationUpdates(locationRequest, new LocationCallback() {
+                            @Override
+                            public void onLocationResult(@NonNull LocationResult locationResult) {
+                                super.onLocationResult(locationResult);
+
+                                LocationServices.getFusedLocationProviderClient(MainActivity.this)
+                                        .removeLocationUpdates(this);
+
+                                if (locationResult != null && locationResult.getLocations().size() >0){
+                                    //Toast.makeText(MainActivity.this, "entered3", Toast.LENGTH_SHORT).show();
+                                    int index = locationResult.getLocations().size() - 1;
+                                     latitude = locationResult.getLocations().get(index).getLatitude();
+                                     longitude = locationResult.getLocations().get(index).getLongitude();
+
+                                    //Toast.makeText(MainActivity.this, " "+latitude+" "+longitude, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }, Looper.getMainLooper());
+
+
+            }else{
+                enableGps();
+            }
+//            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+//                @Override
+//                public void onSuccess(Location location) {
+//                    if(location!=null){
+//                        latitude = location.getLatitude();
+//                        longitude = location.getLongitude();
+//                    }
+//                }
+//            });
+
+        }
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -127,38 +209,75 @@ public class MainActivity extends AppCompatActivity {
                         saveDate();
                     }
                 }
+
+
+
             }
         });
 
     }
 
+    private void enableGps() {
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getApplicationContext())
+                .checkLocationSettings(builder.build());
+
+        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+
+                try {
+                    LocationSettingsResponse response = task.getResult(ApiException.class);
+                    Toast.makeText(MainActivity.this, "GPS is already tured on", Toast.LENGTH_SHORT).show();
+
+                } catch (ApiException e) {
+
+                    switch (e.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+
+                            try {
+                                ResolvableApiException resolvableApiException = (ResolvableApiException) e;
+                                resolvableApiException.startResolutionForResult(MainActivity.this, 2);
+                            } catch (IntentSender.SendIntentException ex) {
+                                ex.printStackTrace();
+                            }
+                            break;
+
+                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                            //Device does not have location
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
+    private boolean isGPSEnabled(){
+
+        LocationManager locationManager=null;
+        boolean isEnabled = false;
+
+        if(locationManager == null){
+            locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        }
+        isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return isEnabled;
+    }
+
     private void saveDate() {
 
-        Date cd = Calendar.getInstance().getTime();
-        System.out.println("Current time => " + cd);
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        date = df.format(cd);
-        //String dateInString = "2011-09-13";  // Start date
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
-        Calendar c = Calendar.getInstance(); // Get Calendar Instance
-        try {
-            c.setTime(sdf.parse(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        c.add(Calendar.DATE, -90);  // add 45 days
-        sdf = new SimpleDateFormat("MM/dd/yyyy");
-
-        Date resultdate = new Date(c.getTimeInMillis());   // Get new time
-        date1 = sdf.format(resultdate);
-        System.out.println("String date:" + date1);
         String id = myRef.push().getKey();
-        String lastDate = "";
-        Details details = new Details(id, name, email, number, password, bloodgroup,age,lastDate, date1);
+
+        Details details = new Details(id, name, email, number, password, bloodgroup,age, latitude, longitude);
+        assert id != null;
         myRef.child(id).setValue(details);
+
         progressDialog.setMessage("Please Wait");
         progressDialog.show();
         mAuth.createUserWithEmailAndPassword(email, password)
