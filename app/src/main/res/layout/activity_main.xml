@@ -47,7 +47,7 @@
                     android:ems="10"
                     android:inputType="textPersonName|textCapWords"
                     android:hint="@string/enter_name"
-                    android:padding="10dp" />
+                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,7 +65,7 @@
                     android:ems="10"
                     android:inputType="textEmailAddress"
                     android:hint="@string/enter_email"
-                    android:padding="10dp" />
+                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,7 +83,7 @@
                     android:maxLength="10"
                     android:inputType="phone"
                     android:hint="@string/enter_mobile"
-                    android:padding="10dp" />
+                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,7 +101,7 @@
                     android:ems="10"
                     android:inputType="textPassword"
                     android:hint="@string/enter_password"
-                    android:padding="10dp" />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,7 +126,7 @@
                     android:maxLength="2"
                     android:inputType="number"
                     android:hint="@string/enter_age"
-                    android:padding="10dp" />
+                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 

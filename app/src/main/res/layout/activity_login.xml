@@ -45,7 +45,7 @@
                     android:ems="10"
                     android:hint="@string/enter_email"
                     android:inputType="textEmailAddress"
-                    android:padding="10dp" />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +63,7 @@
                     android:fontFamily="sans-serif"
                     android:hint="@string/enter_password"
                     android:inputType="textPassword"
-                    android:padding="10dp" />
+                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 

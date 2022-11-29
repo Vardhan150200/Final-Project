@@ -295,36 +295,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+        LatLngBounds.Builder builder= new LatLngBounds.Builder();
+        builder.include(origion);
+        builder.include(dest);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),100));
     }
 
     private void addPolylinesToMap(final DirectionsResult result){
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
+        for(DirectionsRoute route: result.routes){
 
+            List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
 
-                for(DirectionsRoute route: result.routes){
+            List<LatLng> newDecodedPath = new ArrayList<>();
 
-                    List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
-
-                    List<LatLng> newDecodedPath = new ArrayList<>();
-
-                    // This loops through all the LatLng coordinates of ONE polyline.
-                    for(com.google.maps.model.LatLng latLng: decodedPath){
+            // This loops through all the LatLng coordinates of ONE polyline.
+            for(com.google.maps.model.LatLng latLng: decodedPath){
 
 //                        Log.d(TAG, "run: latlng: " + latLng.toString());
 
-                        newDecodedPath.add(new LatLng(
-                                latLng.lat,
-                                latLng.lng
-                        ));
-                    }
-                    Polyline polyline = mMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
-                    polyline.setColor(ContextCompat.getColor(MapsActivity.this, R.color.red));
-                    polyline.setClickable(true);
-
-                }
+                newDecodedPath.add(new LatLng(
+                        latLng.lat,
+                        latLng.lng
+                ));
             }
-        });
+            Polyline polyline = mMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
+            polyline.setColor(ContextCompat.getColor(MapsActivity.this, R.color.red));
+            polyline.setClickable(true);
+
+        }
     }
 }
