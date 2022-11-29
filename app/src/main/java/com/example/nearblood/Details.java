@@ -15,11 +15,15 @@ public class Details {
     private Double latitude;
     private Double longitude;
 
+
+
+    private String BloodStatus;
+
     
     public Details() {
     }
 
-    public Details(String id, String name, String email, String number, String password1, String blood, String age, Double latitude, Double longitude) {
+    public Details(String id, String name, String email, String number, String password1, String blood, String age, Double latitude, Double longitude, String BloodStatus) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -27,7 +31,7 @@ public class Details {
         this.password = password1;
         this.blood = blood;
         this.age = age;
-
+        this.BloodStatus=BloodStatus;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -104,6 +108,13 @@ public class Details {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+    public String getBloodStatus() {
+        return BloodStatus;
+    }
+
+    public void setBloodStatus(String bloodStatus) {
+        BloodStatus = bloodStatus;
     }
 
 }

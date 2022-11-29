@@ -276,7 +276,7 @@ public class DonardetailsActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         if (v.getId() == R.id.donarSend) {
             String donarMessage = donarEdittext.getText().toString();
-            String res = donarMessage+"\nClick below link to see Deferral Poster\nhttps://slideplayer.com/slide/1468017/4/images/12/3.+Deferral+Criteria+Who+CANNOT+donate.jpg";
+            String res = donarMessage+"\nClick below link to reach me\nhttps://www.nearblood.com/"+currentLat+"/"+currentLon+"/"+myAppPrefsManager.getUserName();
 
             if (!donarMessage.isEmpty()) {
                 donarSend.setEnabled(true);

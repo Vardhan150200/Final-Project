@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
         String id = myRef.push().getKey();
 
-        Details details = new Details(id, name, email, number, password, bloodgroup,age, latitude, longitude);
+        Details details = new Details(id, name, email, number, password, bloodgroup,age, latitude, longitude,"0");
         assert id != null;
         myRef.child(id).setValue(details);
 
