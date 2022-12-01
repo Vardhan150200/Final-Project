@@ -183,7 +183,7 @@ public class DonardetailsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
                 group=spinner.getSelectedItem().toString().trim();
-                Toast.makeText(DonardetailsActivity.this, ""+group, Toast.LENGTH_SHORT).show();
+
                 if(group!="Select Your Blood Group") {
                     Query query = myRef.orderByChild("blood").equalTo(group);
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -217,7 +217,7 @@ public class DonardetailsActivity extends AppCompatActivity implements View.OnCl
 
 
                                 }
-                                Toast.makeText(DonardetailsActivity.this, "" + currentLat + " " + currentLon, Toast.LENGTH_SHORT).show();
+
                             CurrentLocation = new Location("");
                             CurrentLocation.setLatitude(currentLat);
                             CurrentLocation.setLongitude(currentLon);
@@ -227,7 +227,7 @@ public class DonardetailsActivity extends AppCompatActivity implements View.OnCl
                                 tree_map.put(details,details.getEmail());
 
                             }
-                            Toast.makeText(DonardetailsActivity.this, ""+tree_map, Toast.LENGTH_LONG).show();
+
                             detailsList.clear();
                                 for (Map.Entry<Details, String>
                                         entry : tree_map.entrySet()){

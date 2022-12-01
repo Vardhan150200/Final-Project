@@ -3,6 +3,12 @@ package com.example.nearblood;
 import com.google.android.gms.maps.model.LatLng;
 
 public class AccesVar {
+    public AccesVar() {
+
+    }
+
+    private Double currentUserLat,currentUserLon;
+    public LatLng origion,dest;
     public AccesVar(Double currentUserLat, Double currentUserLon, LatLng origion, LatLng dest) {
         this.currentUserLat = currentUserLat;
         this.currentUserLon = currentUserLon;
@@ -10,7 +16,7 @@ public class AccesVar {
         this.dest = dest;
     }
 
-    private Double currentUserLat,currentUserLon;
+
 
     public Double getCurrentUserLat() {
         return currentUserLat;
@@ -44,5 +50,5 @@ public class AccesVar {
         this.dest = dest;
     }
 
-    public LatLng origion,dest;
+
 }
